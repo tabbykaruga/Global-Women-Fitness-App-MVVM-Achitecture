@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:learning_mvvm_architecture/presentation/resources/assetsManager.dart';
+import 'package:learning_mvvm_architecture/presentation/onBoarding/onBoarding_ViewModel.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/colorManager.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/stringManager.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/valueManager.dart';
+import '../../domain/model.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -13,28 +14,29 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  late final List<SliderObject> _list = _getSliderData();
 
   final PageController _pageController = PageController(initialPage: 0);
-  int _currentIndex = 0;
+  final OnBoardingViewModel _viewModel =OnBoardingViewModel();
 
-  List<SliderObject> _getSliderData() => [
-        SliderObject(AppString.onBoardingSubTitle1,
-            AppString.onBoardingSubTitle1, ImageAssets.slideImage1),
-        SliderObject(AppString.onBoardingSubTitle1,
-            AppString.onBoardingSubTitle1, ImageAssets.slideImage2),
-        SliderObject(AppString.onBoardingSubTitle1,
-            AppString.onBoardingSubTitle1, ImageAssets.slideImage3),
-        SliderObject(AppString.onBoardingSubTitle1,
-            AppString.onBoardingSubTitle1, ImageAssets.slideImage4),
-      ];
+  _bind(){
+    _viewModel.start();
+  }
+
+  @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return _getContentWidget();
+  }
+
+  Widget _getContentWidget(){
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
-
         elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: ColorManager.white,
@@ -63,11 +65,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               child: TextButton(
                 onPressed: () {
                   //g
-
                 },
                 child: Text(
                   AppString.skip,
-                  style:Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.subtitle2,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -92,7 +93,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               child: SizedBox(
                 height: AppSize.s20,
                 width: AppSize.s20,
-                child: Icon(Icons.arrow_left,color: ColorManager.blue),
+                child: Icon(Icons.arrow_left, color: ColorManager.blue),
               ),
               onTap: () {
                 //go previous slide
@@ -120,7 +121,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               child: SizedBox(
                 height: AppSize.s20,
                 width: AppSize.s20,
-                child: Icon(Icons.arrow_right,color: ColorManager.blue),
+                child: Icon(Icons.arrow_right, color: ColorManager.blue),
               ),
               onTap: () {
                 //go next
@@ -135,29 +136,19 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  int _getPreviousIndex() {
-    int previousIndex = _currentIndex--;
-    if (previousIndex == -1) {
-      _currentIndex = _list.length -
-          1; //infinite loop to go to the length of the slider list
-    }
-    return _currentIndex;
-  }
-
-  int _getNextIndex() {
-    int nextIndex = _currentIndex++;
-    if (nextIndex >= _list.length) {
-      _currentIndex = 0; //infinite loop to go to first item in the slider list
-    }
-    return _currentIndex;
-  }
-
   Widget _getProperCircle(int index) {
     if (index == _currentIndex) {
-      return  Icon(Icons.circle_outlined,color: ColorManager.blue); //selected
+      return Icon(Icons.circle_outlined, color: ColorManager.blue); //selected
     } else {
-      return Icon(Icons.circle_rounded,color: ColorManager.blue);
+      return Icon(Icons.circle_rounded, color: ColorManager.blue);
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: viewmodel.dispose
+    _viewModel.dispose();
+    super.dispose();
   }
 }
 
@@ -197,12 +188,4 @@ class OnBoardingPage extends StatelessWidget {
       ],
     );
   }
-}
-
-class SliderObject {
-  String title;
-  String subTitle;
-  String image;
-
-  SliderObject(this.title, this.subTitle, this.image);
 }
