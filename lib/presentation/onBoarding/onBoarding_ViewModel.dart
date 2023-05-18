@@ -31,21 +31,21 @@ class OnBoardingViewModel extends BaseViewModel
   }
 
   @override
-  int gePrevious() {
+  void gePrevious() {
     int previousIndex = _currentIndex--;
     if (previousIndex == -1) {
       _currentIndex = _list.length - 1; //infinite loop to go to the length of the slider list
     }
-    return _currentIndex;
+    _postDataToView();
   }
 
   @override
-  int goNext() {
+  void goNext() {
     int nextIndex = _currentIndex++;
     if (nextIndex >= _list.length) {
       _currentIndex = 0; //infinite loop to go to first item in the slider list
     }
-    return _currentIndex;
+    _postDataToView();
   }
 
   @override
