@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_mvvm_architecture/app/app.dart';
+import 'package:learning_mvvm_architecture/app/myApp.dart';
 
 class Test extends StatelessWidget {
   const Test({Key? key}) : super(key: key);
