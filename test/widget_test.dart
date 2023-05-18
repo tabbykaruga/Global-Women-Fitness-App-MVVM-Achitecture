@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:learning_mvvm_architecture/app/myApp.dart';
+import 'package:learning_mvvm_architecture/app/app.dart';
 
 import 'package:learning_mvvm_architecture/main.dart';
 
