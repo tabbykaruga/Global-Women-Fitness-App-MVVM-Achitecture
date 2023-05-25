@@ -17,7 +17,7 @@ Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
     };
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
-      json['id'] as int?,
+      json['id'] as String?,
       json['email'] as String?,
       json['first_name'] as String?,
     );

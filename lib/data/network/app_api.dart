@@ -10,5 +10,8 @@ abstract class AppServiceUser {
   factory AppServiceUser(Dio dio,{String baseUrl}) =_AppServiceUser;
   
   @POST("login")
-  Future<AuthenticationResponse> login();
+  Future<AuthenticationResponse> login(
+      @Field("email") String email,
+      @Field("password") String password,
+      );
 }

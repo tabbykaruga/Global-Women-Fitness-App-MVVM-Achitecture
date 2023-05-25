@@ -16,7 +16,7 @@ class BaseResponse {
 @JsonSerializable()
 class UserResponse {
   @JsonKey(name: "id")
-  late int? id;
+  late String? id;
   @JsonKey(name: "email")
   late String? email;
   @JsonKey(name: "first_name")
@@ -34,7 +34,7 @@ class UserResponse {
 @JsonSerializable()
 class AuthenticationResponse extends BaseResponse {
   @JsonKey(name: "user")
-  late UserResponse? user;
+  UserResponse? user;
 
   AuthenticationResponse(this.user);
 
