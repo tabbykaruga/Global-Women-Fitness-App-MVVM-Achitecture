@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:learning_mvvm_architecture/domain/model.dart';
+import 'package:learning_mvvm_architecture/domain/model/model.dart';
 import 'package:learning_mvvm_architecture/presentation/base/baseViewModel.dart';
 
 import '../resources/assetsManager.dart';

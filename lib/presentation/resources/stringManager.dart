@@ -15,4 +15,15 @@ class AppString{
   static const String onBoardingSubTitle4 = "BICEPS WORKOUT";
 
   static const String skip = "Skip";
+
+  //login/Register
+  static const String userName = "userName";
+  static const String password = "password";
+  static const String login = "login";
+  static const String forgetPassword = "forgetPassword";
+  static const String register = "password";
+
+  static const String usernameError = "Wrong Username";
+  static const String passwordError = "Wrong Password";
+
 }

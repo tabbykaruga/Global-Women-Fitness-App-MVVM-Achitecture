@@ -2,7 +2,7 @@
 
 import 'package:learning_mvvm_architecture/app/extension.dart';
 import 'package:learning_mvvm_architecture/data/responses/responses.dart';
-import 'package:learning_mvvm_architecture/domain/model.dart';
+import 'package:learning_mvvm_architecture/domain/model/model.dart';
 
 const EMPTY = "";
 const ZERO = 0;

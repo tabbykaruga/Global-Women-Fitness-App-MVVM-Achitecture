@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learning_mvvm_architecture/presentation/onBoarding/onBoarding_ViewModel.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/colorManager.dart';
+import 'package:learning_mvvm_architecture/presentation/resources/routesManager.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/stringManager.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/valueManager.dart';
-import '../../domain/model.dart';
+import '../../domain/model/model.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    //g
+                    Navigator.pushReplacementNamed(context, Routes.loginRoute);
                   },
                   child: Text(
                     AppString.skip,
