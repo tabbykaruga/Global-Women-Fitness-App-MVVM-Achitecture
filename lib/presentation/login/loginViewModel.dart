@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:learning_mvvm_architecture/domain/usecase/LoginUseCase.dart';
-
 import '../base/baseViewModel.dart';
 import '../common/freezedDataClasses.dart';
 
@@ -38,7 +36,7 @@ class LoginViewModel extends BaseViewModel
   Sink get inputUserName => _userNameStreamController.sink;
 
   @override
-  Sink get inputIsAllInputValid => throw UnimplementedError();
+  Sink get inputIsAllInputValid => _isAllInputsValidStreamController.sink;
 
   @override
   login() async {

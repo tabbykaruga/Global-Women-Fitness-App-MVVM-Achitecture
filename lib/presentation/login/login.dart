@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:learning_mvvm_architecture/app/di.dart';
 import 'package:learning_mvvm_architecture/presentation/login/loginViewModel.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/colorManager.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/stringManager.dart';
 import 'package:learning_mvvm_architecture/presentation/resources/valueManager.dart';
-
 import '../resources/assetsManager.dart';
 import '../resources/routesManager.dart';
 
@@ -17,7 +15,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _viewModel = LoginViewModel(null);
+
+  final LoginViewModel _viewModel = instance<LoginViewModel>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -49,6 +48,7 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _getLoginContent() {
     return Scaffold(
+      backgroundColor: ColorManager.white,
       body: Container(
         padding: const EdgeInsets.only(top: AppPadding.p100),
         child: SingleChildScrollView(
@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               children: [
                 const Image(
-                  image: AssetImage(ImageAssets.splashLogo),
+                  image: AssetImage(ImageAssets.splashLogo4),
                 ),
                 const SizedBox(height: AppSize.s28),
                 Padding(
@@ -117,8 +117,15 @@ class _LoginViewState extends State<LoginView> {
                                   _viewModel.login();
                                 }
                               : null,
-                          child: const Text(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(ColorManager.pink1),
+                          ),
+                          child: Text(
                             AppString.login,
+                            style: TextStyle(
+                              color: ColorManager.white,
+
+                            ),
                           ),
                         ),
                       );

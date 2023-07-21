@@ -40,14 +40,14 @@ ThemeData getApplicationTheme() {
                 borderRadius: BorderRadius.all(Radius.circular(AppSize.s12)))),
       ),
       textTheme: TextTheme(
-          headline1: getSemiBoldStyle(
+          displayLarge: getSemiBoldStyle(
               color: ColorManager.darkGrey, fontSize: FontSizeManager.s16),
-          subtitle1: getMediumStyle(
+          titleMedium: getMediumStyle(
               color: ColorManager.lightGrey, fontSize: FontSizeManager.s14),
-          subtitle2: getMediumStyle(
+          titleSmall: getMediumStyle(
               color: ColorManager.blue, fontSize: FontSizeManager.s14),
-          caption: getRegularStyle(color: ColorManager.grey1),
-          bodyText1: getRegularStyle(color: ColorManager.grey)),
+          bodySmall: getRegularStyle(color: ColorManager.grey1),
+          bodyLarge: getRegularStyle(color: ColorManager.grey)),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.all(AppPadding.p8),
         hintStyle: getRegularStyle(color: ColorManager.grey1),

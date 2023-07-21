@@ -38,6 +38,7 @@ dependencies:
   json_annotation: ^4.8.1
   shared_preferences: ^2.2.0
   freezed: ^2.4.0
+  get_it: ^7.6.0
 
 
 
