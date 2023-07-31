@@ -25,5 +25,8 @@ class AppString{
 
   static const String usernameError = "Wrong Username";
   static const String passwordError = "Wrong Password";
+  static const String loading = "Loading ...";
+  static const String retryAgain = "Try Again !!!";
+  static const String OK = "OK !!!";
 
 }

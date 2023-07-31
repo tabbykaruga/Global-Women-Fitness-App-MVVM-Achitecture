@@ -3,7 +3,7 @@ import 'package:learning_mvvm_architecture/data/network/failure.dart';
 import 'package:learning_mvvm_architecture/data/request/request.dart';
 import 'package:learning_mvvm_architecture/domain/model/model.dart';
 import 'package:learning_mvvm_architecture/domain/repository/repository.dart';
-import 'package:learning_mvvm_architecture/domain/usecase/base_usecase.dart';
+import 'package:learning_mvvm_architecture/domain/usecase/baseUsecase.dart';
 
 class LoginUseCase implements BaseUseCase<LoginUseCaseInput,Authentication>{
   final Repository _repository;

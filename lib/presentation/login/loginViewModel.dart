@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/LoginUseCase.dart';
+import 'package:learning_mvvm_architecture/presentation/common/stateRender.dart';
+import 'package:learning_mvvm_architecture/presentation/common/stateRenderImpl.dart';
 import '../base/baseViewModel.dart';
 import '../common/freezedDataClasses.dart';
 
@@ -12,6 +15,9 @@ class LoginViewModel extends BaseViewModel
   final StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
 
+  final StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
+
   var loginObject = LoginObject("", "");
 
   LoginUseCase? _loginUseCase;
@@ -22,11 +28,13 @@ class LoginViewModel extends BaseViewModel
     _userNameStreamController.close();
     _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   @override
   void start() {
-    // TODO: implement start
+    //view tells state renderer ,to show content on the screen
+    inputState.add(ContentState());
   }
 
   @override
@@ -40,10 +48,19 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    // (await _loginUseCase?.execute(
-    //         LoginUseCaseInput(loginObject.userName, loginObject.password)))
-    //     ?.fold((failure) => {print(failure.message)},
-    //         (data) => {print(data.user?.name)});
+    inputState
+        .add(LoadingState(stateRenderType: StateRenderType.popupLoadingState));
+    (await _loginUseCase?.execute(
+            LoginUseCaseInput(loginObject.userName, loginObject.password)))
+        ?.fold(
+            (failure) => {
+                  inputState.add(ErrorState(
+                      stateRenderType: StateRenderType.fullscreenErrorState,
+                      message: failure.message))
+                }, (data) {
+      inputState.add(ContentState());
+      isUserLoggedInSuccessfullyStreamController.add(true);
+    });
   }
 
   @override
@@ -53,7 +70,6 @@ class LoginViewModel extends BaseViewModel
     //update the input everytime user changes
     loginObject = loginObject.copyWith(password: password);
     _validate();
-
   }
 
   @override
@@ -62,7 +78,6 @@ class LoginViewModel extends BaseViewModel
     loginObject = loginObject.copyWith(userName: userName);
     _validate();
   }
-
 
   @override
   Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream
@@ -89,7 +104,8 @@ class LoginViewModel extends BaseViewModel
     return isPasswordValid(loginObject.password) &&
         isUserNameValid(loginObject.userName);
   }
-  _validate(){
+
+  _validate() {
     inputIsAllInputValid.add(null);
   }
 }
