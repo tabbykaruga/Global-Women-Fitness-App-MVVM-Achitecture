@@ -13,7 +13,7 @@ class _AppServiceUser implements AppServiceUser {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:81/BOMRA-IRMIS-new/development/mis/';
+    baseUrl ??= 'https://5kgd3.wiremockapi.cloud/';
   }
 
   final Dio _dio;
@@ -40,7 +40,67 @@ class _AppServiceUser implements AppServiceUser {
     )
             .compose(
               _dio.options,
-              'login',
+              'user/login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AuthenticationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ForgottenPasswordResponse> forgottenPassword(String email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForgottenPasswordResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'user/forgotPassword',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ForgottenPasswordResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<AuthenticationResponse> register(
+    String countryCode,
+    String userName,
+    String email,
+    String phoneNo,
+    String password,
+    String profilePicture,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'country_code': countryCode,
+      'user_name': userName,
+      'email': email,
+      'phone_no': phoneNo,
+      'password': password,
+      'profile_pic': profilePicture,
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AuthenticationResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'user/register',
               queryParameters: queryParameters,
               data: _data,
             )

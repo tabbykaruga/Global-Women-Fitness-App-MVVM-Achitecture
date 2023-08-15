@@ -19,14 +19,24 @@ class AppString{
   //login/Register
   static const String userName = "userName";
   static const String password = "password";
+  static const String email = "Email";
   static const String login = "login";
-  static const String forgetPassword = "forgetPassword";
-  static const String register = "password";
+  static const String forgotPassword = "forgotPassword";
+  static const String resetPassword = "Reset Password";
+  static const String register = "Register";
 
   static const String usernameError = "Wrong Username";
+  static const String invalidUserName = "Invalid Username";
   static const String passwordError = "Wrong Password";
+  static const String invalidPassword = "Invalid Password";
+  static const String emailError = "Wrong Email";
+  static const String invalidEmail = "Invalid Email";
+  static const String invalidPhoneNo = "Invalid Phone Number";
   static const String loading = "Loading ...";
   static const String retryAgain = "Try Again !!!";
   static const String OK = "OK !!!";
+
+  static const String emailNotSent = "Didn't receive email ?Resend";
+  static const String success = "SUCCESS";
 
 }

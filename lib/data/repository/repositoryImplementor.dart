@@ -13,6 +13,7 @@ class RepositoryImpl extends Repository {
   NetworkInfo _networkInfo;
 
   RepositoryImpl(this._remoteDataSource, this._networkInfo);
+
   @override
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
@@ -20,6 +21,48 @@ class RepositoryImpl extends Repository {
       try {
         //call the api
         final response = await _remoteDataSource.login(loginRequest);
+
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          //success
+          //right -> authentication (Either <Failure or Authenticate>)
+          return Right(response.toDomain());
+        } else {
+          //return biz logic server
+          return left(Failure(response.status ?? ApiInternalStatus.FAILURE, response.message ?? ResponseMessage.UNKNOWN));
+        }
+      } catch (error) {
+        return (left(ErrorHandler.handle(error).failure));
+      }
+    } else {
+      return left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> forgottenPassword(String email) async {
+    if(await _networkInfo.isConnected){
+      try{
+        final response = await _remoteDataSource.forgottenPassword(email);
+
+        if(response.status == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(response.status ?? ResponseCode.DEFAULT,response.message ?? ResponseMessage.UNKNOWN));
+        }
+      }catch (error){
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }else {
+      return left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Authentication>> register(RegisterRequest registerRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        //call the api
+        final response = await _remoteDataSource.register(registerRequest);
 
         if (response.status == ApiInternalStatus.SUCCESS) {
           //success

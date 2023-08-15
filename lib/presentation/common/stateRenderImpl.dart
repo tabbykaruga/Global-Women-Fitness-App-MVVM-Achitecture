@@ -38,6 +38,19 @@ class ErrorState extends FlowState {
   StateRenderType getStateRenderType() => stateRenderType;
 }
 
+//success state
+class SuccessState extends FlowState {
+  String message;
+
+  SuccessState(this.message);
+
+  @override
+  String getMessage() => message;
+
+  @override
+  StateRenderType getStateRenderType() => StateRenderType.popupSuccessState;
+}
+
 //CONTENT STATE
 class ContentState extends FlowState {
   ContentState();
@@ -82,19 +95,27 @@ extension FlowStateExtension on FlowState {
           }
         }
       case ErrorState:
+      {
+        dismissDialog(context);
+        if (getStateRenderType() == StateRenderType.popupErrorState) {
+          //showing popup dialog
+          showPopup(context, getStateRenderType(), getMessage());
+          //return the content ui of the screen
+          return contentScreenWidget;
+        } else {
+          return StateRender(
+              stateRenderType: getStateRenderType(),
+              message: getMessage(),
+              retryAction: retryAction);
+        }
+      }
+      case SuccessState:
         {
           dismissDialog(context);
-          if (getStateRenderType() == StateRenderType.popupErrorState) {
-            //showing popup dialog
-            showPopup(context, getStateRenderType(), getMessage());
-            //return the content ui of the screen
-            return contentScreenWidget;
-          } else {
-            return StateRender(
-                stateRenderType: getStateRenderType(),
-                message: getMessage(),
-                retryAction: retryAction);
-          }
+
+          showPopup(context, StateRenderType.popupSuccessState, getMessage(),title:AppString.success);
+
+          return contentScreenWidget;
         }
       case ContentState:
         {
@@ -124,12 +145,13 @@ extension FlowStateExtension on FlowState {
     }
   }
 
-  showPopup( BuildContext context, StateRenderType stateRenderType, String message) {
+  showPopup( BuildContext context, StateRenderType stateRenderType, String message,{String title = EMPTY}) {
     WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRender(
               stateRenderType: stateRenderType,
               message: message,
+              title: title,
               retryAction: () {},
             )));
   }

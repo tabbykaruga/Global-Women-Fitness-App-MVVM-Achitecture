@@ -1,5 +1,5 @@
 class Constants {
-  static const String baseUrl = "http://localhost:81/BOMRA-IRMIS-new/development/mis/";
+  static const String baseUrl = "https://5kgd3.wiremockapi.cloud/";
   static const String token = "";
 
 }
