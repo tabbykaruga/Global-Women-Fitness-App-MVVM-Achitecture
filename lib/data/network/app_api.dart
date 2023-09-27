@@ -20,12 +20,16 @@ abstract class AppServiceUser {
 
   @POST("user/register")
   Future<AuthenticationResponse> register(
-      @Field("country_code") String countryCode,
       @Field("user_name") String userName,
+      @Field("country_code") String countryCode,
       @Field("email") String email,
-      @Field("phone_no") String phoneNo,
       @Field("password") String password,
+      @Field("phone_no") String phoneNo,
       @Field("profile_pic") String profilePicture,
       );
+
+  @GET("home")
+  Future<HomeResponse> getHome();
+
 }
 

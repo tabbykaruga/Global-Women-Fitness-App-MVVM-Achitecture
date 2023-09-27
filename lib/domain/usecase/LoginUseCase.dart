@@ -6,7 +6,8 @@ import 'package:learning_mvvm_architecture/domain/repository/repository.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/baseUsecase.dart';
 
 class LoginUseCase implements BaseUseCase<LoginUseCaseInput,Authentication>{
-  final Repository _repository;
+  Repository _repository;
+
   LoginUseCase(this._repository);
 
   @override

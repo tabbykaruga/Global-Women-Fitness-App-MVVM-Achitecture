@@ -1,10 +1,12 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/LoginUseCase.dart';
 import 'package:learning_mvvm_architecture/presentation/common/stateRender.dart';
 import 'package:learning_mvvm_architecture/presentation/common/stateRenderImpl.dart';
+import 'package:learning_mvvm_architecture/presentation/resources/stringManager.dart';
 import '../base/baseViewModel.dart';
 import '../common/freezedDataClasses.dart';
+import 'dart:developer';
+
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -18,9 +20,9 @@ class LoginViewModel extends BaseViewModel
   final StreamController isUserLoggedInSuccessfullyStreamController =
       StreamController<bool>();
 
-  var loginObject = LoginObject("", "");
+  var loginObject = LoginObject('', '');
 
-  LoginUseCase? _loginUseCase;
+  final LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
 
   @override
@@ -50,15 +52,19 @@ class LoginViewModel extends BaseViewModel
   login() async {
     inputState
         .add(LoadingState(stateRenderType: StateRenderType.popupLoadingState));
-    (await _loginUseCase?.execute(
+
+    (await _loginUseCase.execute(
             LoginUseCaseInput(loginObject.userName, loginObject.password)))
-        ?.fold(
+        .fold(
             (failure) => {
                   inputState.add(ErrorState(
-                      stateRenderType: StateRenderType.fullscreenErrorState,
+                      stateRenderType: StateRenderType.popupErrorState,
                       message: failure.message))
                 }, (data) {
+
       inputState.add(ContentState());
+
+      //navigate to main screen after login
       isUserLoggedInSuccessfullyStreamController.add(true);
     });
   }

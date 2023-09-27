@@ -127,7 +127,7 @@ class ResponseMessage {
   static const String INTERNAL_SERVER_ERROR = "INTERNAL SERVER ERROR";
 
   //local status code
-  static const String UNKNOWN = "SOMETHING WHEN WRONG TRY AGAIN LATER";
+  static const String UNKNOWN = "SOMETHING WENT WRONG TRY AGAIN LATER";
   static const String CONNECT_TIMEOUT = "CONNECT TIMEOUT ERROR TRY AGAIN LATER";
   static const String CANCEL = "REQUEST CNACLED TRY AGAIN LATER";
   static const String RECIEVE_TIMEOUT = "TIME OUT ERROR TRY AGAIN LATER";

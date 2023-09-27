@@ -41,12 +41,13 @@ ThemeData getApplicationTheme() {
       ),
       textTheme: TextTheme(
           displayLarge: getSemiBoldStyle(
-              color: ColorManager.darkGrey, fontSize: FontSizeManager.s16),
+              color: ColorManager.blue, fontSize: FontSizeManager.s16),
           titleMedium: getMediumStyle(
-              color: ColorManager.lightGrey, fontSize: FontSizeManager.s14),
+              color: ColorManager.grey, fontSize: FontSizeManager.s14),
           titleSmall: getMediumStyle(
               color: ColorManager.blue, fontSize: FontSizeManager.s14),
           bodySmall: getRegularStyle(color: ColorManager.grey1),
+          headlineSmall: getBoldStyle(color: ColorManager.pink1,fontSize: FontSizeManager.s16 ),
           bodyLarge: getRegularStyle(color: ColorManager.grey)),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.all(AppPadding.p8),
@@ -62,7 +63,7 @@ ThemeData getApplicationTheme() {
         //focus
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ColorManager.primary,
+              color: ColorManager.pink1,
               width: AppSize.s1_5,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),

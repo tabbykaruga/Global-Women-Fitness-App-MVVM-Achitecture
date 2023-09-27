@@ -40,7 +40,10 @@ dependencies:
   freezed: ^2.4.0
   get_it: ^7.6.0
   lottie: ^2.5.0
-
+  country_code_picker: ^3.0.0
+  image_picker: ^1.0.2
+  rxdart: ^0.27.2
+  carousel_slider: ^4.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -54,7 +57,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   retrofit_generator: ^7.0.1
-  build_runner: ^2.4.4
+  build_runner: ^2.4.6
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

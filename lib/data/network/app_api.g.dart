@@ -44,7 +44,11 @@ class _AppServiceUser implements AppServiceUser {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = AuthenticationResponse.fromJson(_result.data!);
     return value;
   }
@@ -67,29 +71,33 @@ class _AppServiceUser implements AppServiceUser {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ForgottenPasswordResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
   Future<AuthenticationResponse> register(
-    String countryCode,
     String userName,
+    String countryCode,
     String email,
-    String phoneNo,
     String password,
+    String phoneNo,
     String profilePicture,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {
-      'country_code': countryCode,
       'user_name': userName,
+      'country_code': countryCode,
       'email': email,
-      'phone_no': phoneNo,
       'password': password,
+      'phone_no': phoneNo,
       'profile_pic': profilePicture,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -104,8 +112,39 @@ class _AppServiceUser implements AppServiceUser {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = AuthenticationResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<HomeResponse> getHome() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<HomeResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'home',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = HomeResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -120,5 +159,22 @@ class _AppServiceUser implements AppServiceUser {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

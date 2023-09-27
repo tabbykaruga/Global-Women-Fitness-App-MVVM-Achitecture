@@ -9,6 +9,9 @@ import 'package:learning_mvvm_architecture/presentation/resources/stringManager.
 import 'package:learning_mvvm_architecture/presentation/resources/valueManager.dart';
 import '../resources/assetsManager.dart';
 import '../resources/routesManager.dart';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -19,7 +22,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final LoginViewModel _viewModel = instance<LoginViewModel>();
-  AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -31,17 +34,42 @@ class _LoginViewState extends State<LoginView> {
         .addListener(() => _viewModel.setUserName(_usernameController.text));
     _passwordController
         .addListener(() => _viewModel.setPassword(_passwordController.text));
-
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessLoggedIn) {
       SchedulerBinding.instance?.addPostFrameCallback((_) {
-        _appPreferences.setIsUserLoggedIn(); //set successful
+        _appPreferences.setIsUserLoggedIn();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
     });
   }
 
-  @override
+  myLogin(username,password)  async {
+    // var request = http.Request('POST', Uri.parse('https://5kgd3.wiremockapi.cloud/user/login'));
+    // request.headers.addAll(headers);
+    const apiUrl = 'https://5kgd3.wiremockapi.cloud/user/login';
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      body: jsonEncode({
+        'username': username,
+        'password': password,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      // inputState.add(SuccessState(AppString.success));
+      Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+    }
+    else {
+      Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+
+      // inputState.add(ErrorState(stateRenderType: StateRenderType.popupErrorState));
+    }
+  }
+    @override
   void initState() {
     _bind();
     super.initState();
@@ -61,12 +89,6 @@ class _LoginViewState extends State<LoginView> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _viewModel.dispose();
-    super.dispose();
   }
 
   Widget _getLoginContent() {
@@ -129,18 +151,27 @@ class _LoginViewState extends State<LoginView> {
                 child: StreamBuilder<bool>(
                   stream: _viewModel.outputIsAllInputValid,
                   builder: (context, snapshot) {
+                    Color backgroundColor = ColorManager.lightGrey;
+                    if (snapshot.data ?? false) {
+                      // If all fields are filled, change the background color
+                      backgroundColor = ColorManager.pink1;
+                    }
                     return SizedBox(
                       width: double.infinity,
                       height: AppSize.s40,
                       child: ElevatedButton(
                         onPressed: (snapshot.data ?? false)
                             ? () {
-                                _viewModel.login();
+                          final username = _usernameController.text;
+                          final password = _passwordController.text;
+                                myLogin(username,password);
+                                // _viewModel.login();
                               }
                             : null,
+
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(ColorManager.pink1),
+                              MaterialStateProperty.all(backgroundColor),
                         ),
                         child: Text(
                           AppString.login,
@@ -191,5 +222,11 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 }

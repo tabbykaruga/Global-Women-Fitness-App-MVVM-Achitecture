@@ -64,14 +64,18 @@ class OnBoardingViewModel extends BaseViewModel
       _streamController.stream.map((slideViewObject) => slideViewObject);
 
   List<SliderObject> _getSliderData() => [
-    SliderObject(AppString.onBoardingSubTitle1, AppString.onBoardingSubTitle1,
+    SliderObject(AppString.onBoardingTitle1, AppString.onBoardingSubTitle1,
         ImageAssets.slideImage1),
-    SliderObject(AppString.onBoardingSubTitle1, AppString.onBoardingSubTitle1,
+    SliderObject(AppString.onBoardingTitle2, AppString.onBoardingSubTitle2,
         ImageAssets.slideImage2),
-    SliderObject(AppString.onBoardingSubTitle1, AppString.onBoardingSubTitle1,
+    SliderObject(AppString.onBoardingTitle3, AppString.onBoardingSubTitle3,
         ImageAssets.slideImage3),
-    SliderObject(AppString.onBoardingSubTitle1, AppString.onBoardingSubTitle1,
+    SliderObject(AppString.onBoardingSubTitle4, AppString.onBoardingSubTitle4,
         ImageAssets.slideImage4),
+    SliderObject(AppString.onBoardingSubTitle5, AppString.onBoardingSubTitle5,
+        ImageAssets.slideImage1),
+    SliderObject(AppString.onBoardingSubTitle6, AppString.onBoardingSubTitle6,
+        ImageAssets.slideImage2),
   ];
 
 

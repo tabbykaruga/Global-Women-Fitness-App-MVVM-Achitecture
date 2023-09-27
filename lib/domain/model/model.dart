@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class SliderObject {
   String title;
   String subTitle;
@@ -17,4 +19,40 @@ class Authentication {
   User? user;
 
   Authentication(this.user);
+}
+class Service {
+  int id;
+  String title;
+  String image;
+
+  Service(this.id, this.title, this.image);
+}
+class Exercise {
+  int id;
+  String title;
+  String image;
+
+  Exercise(this.id, this.title, this.image);
+}
+class BannerAd {
+  int id;
+  String title;
+  String image;
+  String link;
+
+  BannerAd(this.id, this.title, this.image,this.link);
+}
+
+class HomeData {
+  List<Service> services;
+  List<Exercise> exercises;
+  List<BannerAd> banners;
+
+  HomeData(this.services, this.exercises, this.banners);
+}
+
+class HomeObject{
+  HomeData data;
+
+  HomeObject(this.data);
 }

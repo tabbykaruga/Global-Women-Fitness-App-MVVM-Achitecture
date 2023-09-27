@@ -49,7 +49,7 @@ class StateRender extends StatelessWidget {
       case StateRenderType.popupLoadingState:
         return  _getPopupDialog(context,[_getAnimatedImage(JsonAssets.loading)]);
       case StateRenderType.popupErrorState:
-        return  _getPopupDialog(context,[_getAnimatedImage(JsonAssets.error),_getMessage(message),_getRetryButton(AppString.OK,context)]);
+        return  _getPopupDialog(context,[_getAnimatedImage(JsonAssets.error),_getMessage(message),_getRetryButton(AppString.retryAgain,context)]);
       case StateRenderType.popupSuccessState:
         return  _getPopupDialog(context,[_getAnimatedImage(JsonAssets.success),_getMessage(title),_getMessage(message),_getRetryButton(AppString.OK,context)]);
       case StateRenderType.fullscreenLoadingState:
@@ -124,6 +124,9 @@ class StateRender extends StatelessWidget {
               Navigator.of(context).pop();//dismiss the pop up error dialog
             }
           },
+              style:  ButtonStyle(
+                backgroundColor:MaterialStatePropertyAll<Color>(ColorManager.pink1),
+              ),
               child: Text(buttonTitle)),
         ),
       ),
@@ -131,12 +134,11 @@ class StateRender extends StatelessWidget {
   }
 
   Widget _getItemsInColumn(List<Widget> children){
-    return const Center(
+    return  Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-        ],
+        children: children,
       ),
     );
   }
