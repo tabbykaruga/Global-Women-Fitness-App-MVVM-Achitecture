@@ -43,32 +43,32 @@ class _LoginViewState extends State<LoginView> {
     });
   }
 
-  myLogin(username,password)  async {
-    // var request = http.Request('POST', Uri.parse('https://5kgd3.wiremockapi.cloud/user/login'));
-    // request.headers.addAll(headers);
-    const apiUrl = 'https://5kgd3.wiremockapi.cloud/user/login';
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      body: jsonEncode({
-        'username': username,
-        'password': password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      // inputState.add(SuccessState(AppString.success));
-      Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-    }
-    else {
-      Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-
-      // inputState.add(ErrorState(stateRenderType: StateRenderType.popupErrorState));
-    }
-  }
+  // myLogin(username,password)  async {
+  //   // var request = http.Request('POST', Uri.parse('https://5kgd3.wiremockapi.cloud/user/login'));
+  //   // request.headers.addAll(headers);
+  //   const apiUrl = 'https://5kgd3.wiremockapi.cloud/user/login';
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     body: jsonEncode({
+  //       'username': username,
+  //       'password': password,
+  //     }),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     final responseData = jsonDecode(response.body);
+  //     // inputState.add(SuccessState(AppString.success));
+  //     Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+  //   }
+  //   else {
+  //     Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+  //
+  //     // inputState.add(ErrorState(stateRenderType: StateRenderType.popupErrorState));
+  //   }
+  // }
     @override
   void initState() {
     _bind();
@@ -162,10 +162,10 @@ class _LoginViewState extends State<LoginView> {
                       child: ElevatedButton(
                         onPressed: (snapshot.data ?? false)
                             ? () {
-                          final username = _usernameController.text;
-                          final password = _passwordController.text;
-                                myLogin(username,password);
-                                // _viewModel.login();
+                          // final username = _usernameController.text;
+                          // final password = _passwordController.text;
+                          //       myLogin(username,password);
+                                _viewModel.login();
                               }
                             : null,
 

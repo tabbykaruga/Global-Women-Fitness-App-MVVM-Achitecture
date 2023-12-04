@@ -33,12 +33,6 @@ class _HomePageViewState extends State<HomePageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: const Text( AppString.home,textAlign: TextAlign.center,),
-            elevation: AppSize.s0,
-            iconTheme: IconThemeData(color: ColorManager.white),
-            backgroundColor: ColorManager.pink1,
-          ),
       body: Center(
         child: SingleChildScrollView(
           child: StreamBuilder<FlowState>(
@@ -154,7 +148,7 @@ class _HomePageViewState extends State<HomePageView> {
                           borderRadius: BorderRadius.circular(AppSize.s12),
                           child: Image.network(service.image,
                               fit: BoxFit.cover,
-                              width: AppSize.s100,
+                              width: AppSize.s130,
                               height: AppSize.s100),
                         ),
                         Padding(

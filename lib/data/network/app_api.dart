@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:learning_mvvm_architecture/domain/model/model.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../app/constants.dart';
 import '../responses/responses.dart';
@@ -31,5 +32,7 @@ abstract class AppServiceUser {
   @GET("home")
   Future<HomeResponse> getHome();
 
+  @GET("exercises/1")
+  Future<ExerciseResponse> getExerciseDetails();
 }
 

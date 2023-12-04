@@ -50,7 +50,21 @@ class AppString{
   static const String search = "Search";
   static const String notification = "Notification";
 
-  static const String home = "home";
+  static const String home = "Home";
   static const String services = "Services";
   static const String exercise = "Exercise";
+  static const String details = "details";
+  static const String about = "about";
+
+
+  static const String inviteFriends = "Invite Friends";
+  static const String contactUs = "Contact Us";
+  static const String logout = "Log Out";
+  static const String darkMode = "Dark Mode";
+
+  static const String notifications = "Notifications";
+
+
+
+
 }

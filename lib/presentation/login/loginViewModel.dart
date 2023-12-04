@@ -20,7 +20,7 @@ class LoginViewModel extends BaseViewModel
   final StreamController isUserLoggedInSuccessfullyStreamController =
       StreamController<bool>();
 
-  var loginObject = LoginObject('', '');
+  var loginObject = LoginObject("", "");
 
   final LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
@@ -57,16 +57,20 @@ class LoginViewModel extends BaseViewModel
             LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
-                  inputState.add(ErrorState(
-                      stateRenderType: StateRenderType.popupErrorState,
-                      message: failure.message))
-                }, (data) {
+                  // inputState.add(ErrorState(
+                  //     stateRenderType: StateRenderType.popupErrorState,
+                  //     message: failure.message))
 
-      inputState.add(ContentState());
-
-      //navigate to main screen after login
-      isUserLoggedInSuccessfullyStreamController.add(true);
-    });
+            inputState.add(ContentState()),
+        //navigate to main screen after login
+        isUserLoggedInSuccessfullyStreamController.add(true)
+                },
+            (data) {
+                  inputState.add(ContentState());
+                  //navigate to main screen after login
+                  isUserLoggedInSuccessfullyStreamController.add(true);
+              }
+    );
   }
 
   @override

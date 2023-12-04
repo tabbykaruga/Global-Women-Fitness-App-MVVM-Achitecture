@@ -56,3 +56,14 @@ class HomeObject{
 
   HomeObject(this.data);
 }
+class ExerciseDetails {
+  int id;
+  String title;
+  String image;
+  String details;
+  String services;
+  String about;
+
+  ExerciseDetails(
+      this.id, this.title, this.image, this.details, this.services, this.about);
+}

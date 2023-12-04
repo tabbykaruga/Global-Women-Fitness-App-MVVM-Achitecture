@@ -8,10 +8,12 @@ import 'package:learning_mvvm_architecture/data/network/dio_factory.dart';
 import 'package:learning_mvvm_architecture/data/network/networkInfo.dart';
 import 'package:learning_mvvm_architecture/data/repository/repositoryImplementor.dart';
 import 'package:learning_mvvm_architecture/domain/repository/repository.dart';
+import 'package:learning_mvvm_architecture/domain/usecase/ExerciseDetailsUseCase.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/ForgotPasswordUseCase.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/HomeUseCase.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/LoginUseCase.dart';
 import 'package:learning_mvvm_architecture/domain/usecase/RegisterUseCase.dart';
+import 'package:learning_mvvm_architecture/presentation/exerciseDetails/ExerciseViewModel.dart';
 import 'package:learning_mvvm_architecture/presentation/forgotPassword/forgotPasswordViewModel.dart';
 import 'package:learning_mvvm_architecture/presentation/login/loginViewModel.dart';
 import 'package:learning_mvvm_architecture/presentation/main/Home/HomeViewModel.dart';
@@ -85,5 +87,14 @@ initHomeModule() {
   if (!GetIt.I.isRegistered<HomeUseCase>()) {
     instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
     instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
+  }
+}
+
+initExerciseDetailsModule() {
+  if (!GetIt.I.isRegistered<ExerciseDetailsUseCase>()) {
+    instance.registerFactory<ExerciseDetailsUseCase>(
+            () => ExerciseDetailsUseCase(instance()));
+    instance.registerFactory<ExerciseDetailsViewModel>(
+            () => ExerciseDetailsViewModel(instance()));
   }
 }

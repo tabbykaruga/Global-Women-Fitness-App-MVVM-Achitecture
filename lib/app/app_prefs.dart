@@ -24,4 +24,8 @@ class AppPreferences{
   Future<bool> isUserLoggedIn()async{
     return _sharedPreferences.getBool(prefsKeyIsUserLoggedIn) ?? false;
   }
+  
+  Future<void> logout() async{
+    _sharedPreferences.remove(prefsKeyIsUserLoggedIn);
+  }
 }

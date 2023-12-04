@@ -56,3 +56,15 @@ extension HomeRepsonseMapper on HomeResponse? {
     return HomeObject(data);
   }
 }
+
+// extension ExerciseDetailsResponseMapper on ExerciseDetailsResponse? {
+//   ExerciseDetails toDomain() {
+//     return ExerciseDetails(
+//         this?.id?.orZero() ?? ZERO,
+//         this?.title?.orEmpty() ?? EMPTY,
+//         this?.image?.orEmpty() ?? EMPTY,
+//         this?.details?.orEmpty() ?? EMPTY,
+//         this?.services?.orEmpty() ?? EMPTY,
+//         this?.about?.orEmpty() ?? EMPTY);
+//   }
+// }

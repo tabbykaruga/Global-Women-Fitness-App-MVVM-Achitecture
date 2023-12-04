@@ -11,9 +11,9 @@ import '../network/networkInfo.dart';
 import 'dart:developer';
 
 class RepositoryImpl extends Repository {
-  RemoteDataSource _remoteDataSource;
-  LocalDataSource _localDataSource;
-  NetworkInfo _networkInfo;
+  final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
+  final NetworkInfo _networkInfo;
 
   RepositoryImpl(this._remoteDataSource, this._networkInfo,this._localDataSource);
 
@@ -31,14 +31,13 @@ class RepositoryImpl extends Repository {
           return Right(response.toDomain());
         } else {
           //return biz logic server
-          log('here login');
-          return left(Failure(response.status ?? ApiInternalStatus.FAILURE, response.message ?? ResponseMessage.UNKNOWN));
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE, response.message ?? ResponseMessage.UNKNOWN));
         }
       } catch (error) {
-        return (left(ErrorHandler.handle(error).failure));
+        return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
-      return left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 
@@ -57,7 +56,7 @@ class RepositoryImpl extends Repository {
         return Left(ErrorHandler.handle(error).failure);
       }
     }else {
-      return left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 
@@ -74,18 +73,18 @@ class RepositoryImpl extends Repository {
           return Right(response.toDomain());
         } else {
           //return biz logic server
-          return left(Failure(response.status ?? ApiInternalStatus.FAILURE, response.message ?? ResponseMessage.UNKNOWN));
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE, response.message ?? ResponseMessage.UNKNOWN));
         }
       } catch (error) {
-        return (left(ErrorHandler.handle(error).failure));
+        return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
-      return left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 
   @override
-  Future<Either<Failure, HomeObject>> getHome() async{
+  Future<Either<Failure, HomeObject>> getHome() async {
     try {
       // get from cache
       final response = await _localDataSource.getHome();
@@ -99,17 +98,56 @@ class RepositoryImpl extends Repository {
           if (response.status == ApiInternalStatus.SUCCESS) {
             //success
             //right -> authentication (Either <Failure or Authenticate>)
+            _localDataSource.saveHomeToCache(response);
             return Right(response.toDomain());
           } else {
             //return biz logic server
             log('here home');
-            return left(Failure(response.status ?? ApiInternalStatus.FAILURE, response.message ?? ResponseMessage.UNKNOWN));
+            return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+                response.message ?? ResponseMessage.UNKNOWN));
           }
         } catch (error) {
-          return (left(ErrorHandler.handle(error).failure));
+          return (Left(ErrorHandler
+              .handle(error)
+              .failure));
         }
       } else {
-        return left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
       }
     }
+  }
+
+  @override
+  Future<Either<Failure, ExerciseDetails>> getExerciseDetails() {
+    // TODO: implement getExerciseDetails
+    throw UnimplementedError();
+  }
+
+  // @override
+  // Future<Either<Failure, ExerciseDetails>> getExerciseDetails() async {
+  //   try {
+  //     // get data from cache
+  //     final response = await _localDataSource.getExerciseDetails();
+  //     return Right(response.toDomain());
+  //   } catch (cacheError) {
+  //     if (await _networkInfo.isConnected) {
+  //       try {
+  //         final response = await _remoteDataSource.getExerciseDetails();
+  //         if (response.status == ApiInternalStatus.SUCCESS) {
+  //           _localDataSource.saveExerciseDetailsToCache(response);
+  //           return Right(response.toDomain());
+  //         } else {
+  //           return Left(Failure(response.status ?? ResponseCode.DEFAULT,
+  //               response.message ?? ResponseMessage.UNKNOWN));
+  //         }
+  //       } catch (error) {
+  //         return Left(ErrorHandler.handle(error).failure);
+  //       }
+  //     } else {
+  //       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  //     }
+  //   }
+  // }
+  // }
+
 }

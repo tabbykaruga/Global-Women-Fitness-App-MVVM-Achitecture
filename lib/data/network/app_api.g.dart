@@ -177,4 +177,10 @@ class _AppServiceUser implements AppServiceUser {
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
+
+  @override
+  Future<ExerciseResponse> getExerciseDetails() {
+    // TODO: implement getExerciseDetails
+    throw UnimplementedError();
+  }
 }
